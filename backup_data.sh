@@ -2,6 +2,9 @@
 
 echo Sauvegarde des données
 
+mpg123 /home/pi/RPi-Jukebox-RFID/shared/startupsound.mp3
+
+
 if [ "$(id -nu)" != "root" ]; then
    echo Nécessite sudo
     exit 1
@@ -15,10 +18,9 @@ mount -t nfs 192.168.0.21:/volume1/PhonieBoxBackup /mnt/backup && rsync -avz /ho
 
 # ls -al /mnt/backup
 
-
-
-
 umount /mnt/backup
 
-# PhonieBox-Iris
+
+mpg123 /home/pi/RPi-Jukebox-RFID/shared/shutdownsound.mp3
+
 
