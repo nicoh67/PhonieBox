@@ -1,0 +1,14 @@
+# VARIABLES TO CHANGE
+# This file is read by scripts/backup2network.sh
+# It contains the RFID chip IDs which are used to control the Phoniebox.
+# Adjust these variables to match your system and configuration.
+#
+
+
+## Custom commands
+### Backup to Network (Nicos command)
+VOLUME_BACKUP="/mnt/backup"
+
+
+
+echo $VOLUME_BACKUP
