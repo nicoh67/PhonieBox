@@ -83,5 +83,59 @@ function formatNumber($n) {
 }
 
 
+function conv_octets($octet)
+{
+    // Array contenant les differents unités 
+    $unite = array(' o',' Ko',' Mo',' Go');
+    
+    if ($octet < 1000) // octet
+    {
+        return $octet.$unite[0];
+    }
+    else 
+    {
+        if ($octet < 1000000) // ko
+        {
+            $ko = round($octet/1024,2);
+            return $ko.$unite[1];
+        }
+        else // Mo ou Go 
+        {
+            if ($octet < 1000000000) // Mo 
+            {
+                $mo = round($octet/(1024*1024),2);
+                return $mo.$unite[2];
+            }
+            else // Go 
+            {
+                $go = round($octet/(1024*1024*1024),2);
+                return $go.$unite[3];    
+            }
+        }
+    }
+}
+
+
+function speak($texte, $fichier="") {
+	$texte = urlencode($texte);
+
+	if(!$fichier)
+		$fichier = __DIR__ ."/sounds/$texte.mp3";
+
+	if(!file_exists($fichier)) {
+		$mp3 = curl_get_contents("http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$texte&tl=fr");
+		@mkdir(dirname($fichier), 0775, true);
+		file_put_contents($fichier, $mp3);
+		
+		$fichier_dest = $fichier .".mp3";
+		$cmd = "F:\\ffmpeg\\bin\\ffmpeg -i \"concat:". realpath($fichier) ."|silence-0.5sec.mp3\" -acodec mp3 -ar 44100 \"$fichier_dest\"";
+		exec($cmd, $output, $ret);
+		if(file_exists($fichier_dest))
+			rename($fichier_dest, $fichier);
+
+	}
+	return $fichier;
+}
+
 
 ?>

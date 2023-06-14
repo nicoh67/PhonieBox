@@ -1,4 +1,5 @@
 audiofolders
 GAMES/*/*
+!GAMES/*/*.php
 vendor/
 Cartes RFID/

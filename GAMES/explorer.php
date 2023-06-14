@@ -38,7 +38,7 @@ h2 {
 .cartes .carte .carte_contents {
     background: #EEE;
     display: flex;
-    border: 1px solid #000;
+    border: 1px solid #BBB;
 
 }
 .cartes .carte .img {
@@ -62,11 +62,20 @@ h2 {
     text-align: center;
 }
 .sounds > div {
-    padding: 5px;
+    padding: 3px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-.sounds a {
+.sound a {
     text-decoration: none;
     color: #88F;
+    text-align: left;
+}
+.sound .size {
+    font-size: .7em;
+    color: #888;
+    text-align: right;
 }
 
 #player {
@@ -88,6 +97,7 @@ h2 {
     border: 0;
 }
 
+
 </style>
 
 <?php
@@ -108,18 +118,21 @@ foreach($niveaux_folders as $niveau_folder) {
         echo("
         <div class=carte>
             <div class=carte_contents>
-                <div class=img><img src=\"$object_folder/cover.jpg\" /></div>
+                <div class=img>
+                    <img src=\"$object_folder/cover.jpg\" />
+                    ". (file_exists("$object_folder/cover1.jpg") ? "<img src=\"$object_folder/cover1.jpg\" />" : "") ."
+                </div>
                 <div class=details>
                     <div class=texte>$texte</div>
                     <div class=sounds>
-                        <div>
+                        <div class=sound>
         ");
         echo(implode('</div>
-                        <div>', array_filter(array_map(function($v) use ($texte) {
+                        <div class=sound>', array_filter(array_map(function($v) use ($texte) {
                             $r = explode("_", str_replace(".mp3", "", basename($v)));
                             // if(!$r[0])
                             //     return false;
-                            return "<a title=\"$texte - ". $r[0] ."\" href=\"$v\">". $r[0] ."</a>";
+                            return "<a title=\"$texte - ". $r[0] ."\" href=\"$v\">". $r[0] ."</a> <span class=size>". conv_octets(filesize($v)) ."</span>";
                         }, $sounds))));
                 
         echo("
